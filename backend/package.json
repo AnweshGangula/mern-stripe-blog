@@ -1,0 +1,16 @@
+{
+  "name": "mern-stripe-blogpost-backend",
+  "version": "1.0.0",
+  "description": "This is the backend code for mern stripe blogpost project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Anwesh Gangula",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.2.4"
+  }
+}
