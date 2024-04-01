@@ -3,41 +3,46 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema(
     {
         // Post Schema
+        title: {
+            type: String,
+            required: true,
+        },
         description: {
             type: String,
             required: true,
             trim: true
         },
         image: {
-            fieldname: {
-                type: String
-            },
-            originalName: {
-                type: String
-            },
-            encoding: {
-                type: String
-            },
-            mimeType: {
-                type: String
-            },
-            path: {
-                type: String
-            },
-            size: {
-                type: Number
-            },
-            filename: {
-                type: String
-            },
-            public_id: {
-                type: String
-            },
+            type: Object,
+            // fieldname: {
+            //     type: String
+            // },
+            // originalName: {
+            //     type: String
+            // },
+            // encoding: {
+            //     type: String
+            // },
+            // mimeType: {
+            //     type: String
+            // },
+            // path: {
+            //     type: String
+            // },
+            // size: {
+            //     type: Number
+            // },
+            // filename: {
+            //     type: String
+            // },
+            // public_id: {
+            //     type: String
+            // },
         },
         author: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
-            required: true
+            // required: true
         },
         nextEarningDate: {
             type: Date,

@@ -4,12 +4,14 @@
   "description": "This is the backend code for mern stripe blogpost project",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "keywords": [],
   "author": "Anwesh Gangula",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.2.4"
   }
