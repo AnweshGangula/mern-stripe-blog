@@ -16,18 +16,20 @@ function CreatePost() {
         initialValues: {
             title: '',
             description: ''
-        },// validation
+        },
+        // validation
         validationSchema: Yup.object({
             title: Yup.string().required('Title is required'),
             description: Yup.string().required('Description is required')
         }),
         // submit handler
-        onSubmit: (values) => {
-            console.log({ values });
-            postMutation.mutate(values);
+        onSubmit: (postData) => {
+            // console.log({ values });
+            postMutation.mutate(postData);
         }
     })
 
+    // console.log('mutation', postMutation)
     return (
         <div>
             <form onSubmit={formik.handleSubmit}>
