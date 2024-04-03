@@ -4,8 +4,10 @@
   "description": "This is the backend code for mern stripe blogpost project",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "start": "node backend/server.js",
+    "client": "npm run dev --prefix frontend",
+    "server": "nodemon backend/server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "Anwesh Gangula",
@@ -14,5 +16,9 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.2.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.0"
   }
 }
