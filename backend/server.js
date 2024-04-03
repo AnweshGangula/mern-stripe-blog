@@ -27,7 +27,7 @@ app.post('/api/v1/posts/create', async (req, res) => {
         // console.log({body: req.body})
         // get the payload
         const postData = req.body;
-        
+
         const postCreated = await Post.create(postData);
         // console.log({postData})
 
@@ -41,7 +41,7 @@ app.post('/api/v1/posts/create', async (req, res) => {
     }
 })
 
-app.get('/api/v1/posts', async(req, res)=>{
+app.get('/api/v1/posts', async (req, res) => {
     try {
         const posts = await Post.find();
 
@@ -52,6 +52,57 @@ app.get('/api/v1/posts', async(req, res)=>{
         })
     } catch (error) {
         res.json(error)
+    }
+})
+
+app.put('/api/v1/posts/:postId', async (req, res) => {
+    try {
+        const postId = req.params.postId;
+
+        const postFound = await Post.findById(postId)
+        if (!postFound) {
+            throw new Error('Post not found')
+        }
+
+        const postUpdated = await Post.findByIdAndUpdate(
+            postId,
+            {
+                title: req.body.title,
+                description: req.body.description
+            },
+            {
+                new: true,
+            }
+        )
+
+        res.json({
+            status:' Post updated successfully',
+            postUpdated
+        })
+    } catch (error) {
+        // throw new Error(error);
+        res.status(400).json(error)
+    }
+})
+
+app.get('/api/v1/posts/:postId', async(req, res)=>{
+    try {
+        const postId = req.params.postId;
+
+        const postFound = await Post.findById(postId);
+
+        if (!postFound) {
+            throw new Error('Post not found')
+        }
+
+        res.json({
+            status: "Post Fetcehd successfully",
+            postFound
+        })
+
+    } catch (error) {
+        // throw new Error(error);
+        res.status(400).json(error)
     }
 })
 
