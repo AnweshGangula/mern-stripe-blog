@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CreatePost from './Components/Posts/CreatePost'
+import PostsList from './Components/PostsList'
 
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   return (
     <div>
       <CreatePost />
+      <PostsList />
     </div>
   )
 }

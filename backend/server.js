@@ -41,4 +41,18 @@ app.post('/api/v1/posts/create', async (req, res) => {
     }
 })
 
+app.get('/api/v1/posts', async(req, res)=>{
+    try {
+        const posts = await Post.find();
+
+        res.json({
+            status: 'success',
+            message: 'posts fetcehd successfully',
+            posts
+        })
+    } catch (error) {
+        res.json(error)
+    }
+})
+
 app.listen(PORT, console.log(`Server listening on port ${PORT}`));
