@@ -26,3 +26,10 @@ export const deletePostById = async(postId)=>{
 
     return postById.data;
 }
+
+export const updatePostById = async (postData) => {
+    // console.log({postData})
+    const response = await axios.put(BASE_URL + '/api/v1/posts/' + postData.postId, postData);
+
+    return response.data;
+};
