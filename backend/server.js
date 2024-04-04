@@ -96,7 +96,7 @@ app.get('/api/v1/posts/:postId', async(req, res)=>{
         }
 
         res.json({
-            status: "Post Fetcehd successfully",
+            status: "Post Fetched successfully",
             postFound
         })
 

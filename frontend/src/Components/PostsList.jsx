@@ -19,7 +19,7 @@ const PostsList = () => {
         {isSuccess && <p>Posts fetched</p>}
         {data?.posts.map(post=>{
             return (
-                <div>
+                <div key={post._id} >
                     <h2>{post.title}</h2>
                     <p>{post.description}</p>
                 </div>
