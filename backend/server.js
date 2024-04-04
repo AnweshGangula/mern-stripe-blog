@@ -80,7 +80,7 @@ app.put('/api/v1/posts/:postId', async (req, res) => {
             postUpdated
         })
     } catch (error) {
-        // throw new Error(error);
+        throw new Error(error);
         res.status(400).json(error)
     }
 })
@@ -102,7 +102,7 @@ app.get('/api/v1/posts/:postId', async(req, res)=>{
         })
 
     } catch (error) {
-        // throw new Error(error);
+        throw new Error(error);
         res.status(400).json(error)
     }
 })
@@ -124,7 +124,7 @@ app.delete('/api/v1/posts/:postId', async(req, res)=>{
         })
 
     } catch (error) {
-        // throw new Error(error);
+        throw new Error(error);
         res.status(400).json(error)
     }
 })

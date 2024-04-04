@@ -7,7 +7,7 @@ import { fetchPostById } from '../../APIServices/posts/postAPI';
 const PostDetails = () => {
     const { postId } = useParams();
 
-    const { isError, isLoading, isSuccess, data, error } = useQuery({
+    const { isError, isLoading, isSuccess, isStale, data, error } = useQuery({
         queryKey: ['post-details'],
         queryFn: () => fetchPostById(postId)
     })
@@ -17,6 +17,9 @@ const PostDetails = () => {
     return (
         <div>
             {/* PostDetails */}
+            {isLoading && <p>Loading...</p>}
+            {isError && <p>Error</p>}
+            {isStale && <p>Timeout</p>}
             {data &&
                 <>
                     <h2>{data.postFound.title}</h2>

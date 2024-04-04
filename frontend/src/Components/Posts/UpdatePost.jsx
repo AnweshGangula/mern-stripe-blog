@@ -9,7 +9,7 @@ import { fetchPostById, updatePostById } from '../../APIServices/posts/postAPI';
 const updatePost = () => {
     const { postId } = useParams();
 
-    const { data } = useQuery({
+    const { data, isLoading: postLoading, isError: postLoadError, error: postError } = useQuery({
         queryKey: ['post-details'],
         queryFn: () => fetchPostById(postId)
     })
@@ -53,9 +53,11 @@ const updatePost = () => {
     return (
         <div>
             {/* PostDetails */}
-            {data &&
-                <>
-                    <h2>You are editing: {data.postFound.title}</h2>
+            {postLoading && <p>Loading...</p>}
+            {postLoadError && <p>Error is loading post: {postError.message}</p>}
+            {/* {data &&
+                <> */}
+                    <h2>You are editing: {data?.postFound?.title}</h2>
                     {/* <p>{data.postFound.description}</p> */}
 
                     <div>
@@ -86,8 +88,8 @@ const updatePost = () => {
                             </button>
                         </form>
                     </div>
-                </>
-            }
+                {/* </>
+            } */}
         </div>
     )
 }
