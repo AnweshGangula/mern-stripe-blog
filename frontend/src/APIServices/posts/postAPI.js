@@ -20,3 +20,9 @@ export const fetchPostById = async(postId)=>{
 
     return postById.data;
 }
+
+export const deletePostById = async(postId)=>{
+    const postById = await axios.delete(BASE_URL + '/api/v1/posts/' + postId);
+
+    return postById.data;
+}

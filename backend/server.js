@@ -96,8 +96,31 @@ app.get('/api/v1/posts/:postId', async(req, res)=>{
         }
 
         res.json({
-            status: "Post Fetched successfully",
+            status: 'success',
+            message: "Post Fetched successfully",
             postFound
+        })
+
+    } catch (error) {
+        // throw new Error(error);
+        res.status(400).json(error)
+    }
+})
+
+app.delete('/api/v1/posts/:postId', async(req, res)=>{
+    try {
+        const postId = req.params.postId;
+
+        const postFound = await Post.findByIdAndDelete(postId);
+
+        if (!postFound) {
+            throw new Error('Post not found')
+        }
+
+        res.json({
+            status: 'success',
+            message: "Post Deleted successfully",
+            // postFound
         })
 
     } catch (error) {
