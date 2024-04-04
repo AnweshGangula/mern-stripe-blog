@@ -14,3 +14,9 @@ export const fetchAllPosts = async()=>{
 
     return response.data;
 }
+
+export const fetchPostById = async(postId)=>{
+    const postById = await axios.get(BASE_URL + '/api/v1/posts/' + postId);
+
+    return postById.data;
+}
