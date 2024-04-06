@@ -1,8 +1,9 @@
 import React from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
-
-import { deletePostById, fetchAllPosts } from '../../APIServices/posts/postAPI'
 import { Link } from 'react-router-dom'
+
+import './postCss.css'
+import { deletePostById, fetchAllPosts } from '../../APIServices/posts/postAPI'
 
 const PostsList = () => {
 
@@ -89,11 +90,12 @@ const PostsList = () => {
                   <div className="relative" style={{ height: 240 }}>
                     <div className="absolute top-0 left-0 z-10"></div>
                     <div className="absolute bottom-0 right-0 z-10"></div>
-                    {/* <img
+                    <img
                       className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-                      src={post?.image?.path}
-                      alt={post?._id}
-                    /> */}
+                      // src={post?.image?.path}
+                      src='https://cdn.pixabay.com/photo/2015/11/16/16/28/bird-1045954_1280.jpg'
+                      // alt={post?._id}
+                    />
                   </div>
                   <div className="pt-6 pb-3 px-4">
                     <div

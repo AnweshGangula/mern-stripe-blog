@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import CreatePost from './Components/Posts/CreatePost'
 import PostsList from './Components/Posts//PostsList'
 import PublicNavbar from './Components/Navbar/PublicNavbar'
-import HomePage from './Components/Home/HomePage'
+import Home from './Components/Home/Home'
 import PostDetails from './Components/Posts/PostDetails'
 import UpdatePost from './Components/Posts/UpdatePost'
 
@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <PublicNavbar />
       <Routes>
-        <Route element={<HomePage />} path='/' />
+        <Route element={<Home />} path='/' />
         <Route element={<CreatePost />} path='/create-post' />
         <Route element={<PostsList />} path='/lists' />
         {/* <Route element={<PostDetails />} path='/posts/:postId' /> */}
