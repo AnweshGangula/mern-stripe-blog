@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const asyncHandler = require('express-async-handler');
 
 const Post = require('./models/Post/Post');
 
@@ -22,111 +23,105 @@ app.use(cors(corsOptions))
 app.use(express.json()); // parse json data
 
 // Routes
-app.post('/api/v1/posts/create', async (req, res) => {
-    try {
-        // console.log({body: req.body})
-        // get the payload
-        const postData = req.body;
+app.post('/api/v1/posts/create', asyncHandler(async (req, res) => {
+    // console.log({body: req.body})
+    // get the payload
+    const postData = req.body;
 
-        const postCreated = await Post.create(postData);
-        // console.log({postData})
+    const existingPost = await Post.findOne({ title: postData.title });
+    if (existingPost) {
+        throw new Error('Post with this title already exists');
+    };
 
-        res.status(200).json({
-            status: 'success',
-            message: 'Post created successfully',
-            postCreated
-        })
-    } catch (error) {
-        res.status(400).json(error)
+    const postCreated = await Post.create(postData);
+    // console.log({postData})
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Post created successfully',
+        postCreated
+    })
+}))
+
+app.get('/api/v1/posts', asyncHandler(async (req, res) => {
+    const posts = await Post.find();
+
+    res.json({
+        status: 'success',
+        message: 'posts fetcehd successfully',
+        posts
+    })
+
+}))
+
+app.put('/api/v1/posts/:postId', asyncHandler(async (req, res) => {
+    const postId = req.params.postId;
+
+    const postFound = await Post.findById(postId)
+    if (!postFound) {
+        throw new Error('Post not found')
     }
-})
 
-app.get('/api/v1/posts', async (req, res) => {
-    try {
-        const posts = await Post.find();
-
-        res.json({
-            status: 'success',
-            message: 'posts fetcehd successfully',
-            posts
-        })
-    } catch (error) {
-        res.json(error)
-    }
-})
-
-app.put('/api/v1/posts/:postId', async (req, res) => {
-    try {
-        const postId = req.params.postId;
-
-        const postFound = await Post.findById(postId)
-        if (!postFound) {
-            throw new Error('Post not found')
+    const postUpdated = await Post.findByIdAndUpdate(
+        postId,
+        {
+            title: req.body.title,
+            description: req.body.description
+        },
+        {
+            new: true,
         }
+    )
 
-        const postUpdated = await Post.findByIdAndUpdate(
-            postId,
-            {
-                title: req.body.title,
-                description: req.body.description
-            },
-            {
-                new: true,
-            }
-        )
+    res.json({
+        status: ' Post updated successfully',
+        postUpdated
+    })
+}))
 
-        res.json({
-            status:' Post updated successfully',
-            postUpdated
-        })
-    } catch (error) {
-        throw new Error(error);
-        res.status(400).json(error)
+app.get('/api/v1/posts/:postId', asyncHandler(async (req, res) => {
+    const postId = req.params.postId;
+
+    const postFound = await Post.findById(postId);
+
+    if (!postFound) {
+        throw new Error('Post not found')
     }
-})
 
-app.get('/api/v1/posts/:postId', async(req, res)=>{
-    try {
-        const postId = req.params.postId;
+    res.json({
+        status: 'success',
+        message: "Post Fetched successfully",
+        postFound
+    })
 
-        const postFound = await Post.findById(postId);
+}))
 
-        if (!postFound) {
-            throw new Error('Post not found')
-        }
+app.delete('/api/v1/posts/:postId', asyncHandler(async (req, res) => {
+    const postId = req.params.postId;
 
-        res.json({
-            status: 'success',
-            message: "Post Fetched successfully",
-            postFound
-        })
+    const postFound = await Post.findByIdAndDelete(postId);
 
-    } catch (error) {
-        throw new Error(error);
-        res.status(400).json(error)
+    if (!postFound) {
+        throw new Error('Post not found')
     }
-})
 
-app.delete('/api/v1/posts/:postId', async(req, res)=>{
-    try {
-        const postId = req.params.postId;
+    res.json({
+        status: 'success',
+        message: "Post Deleted successfully",
+        // postFound
+    })
 
-        const postFound = await Post.findByIdAndDelete(postId);
 
-        if (!postFound) {
-            throw new Error('Post not found')
-        }
+}))
 
-        res.json({
-            status: 'success',
-            message: "Post Deleted successfully",
-            // postFound
-        })
 
-    } catch (error) {
-        throw new Error(error);
-        res.status(400).json(error)
-    }
+// Error Handling middleWare
+app.use((err, req, res, next) => {
+    // console.log({err})
+    const message = err.message;
+    const stack = err.stack
+    // console.log({message})
+    res.status(500).json({ message, stack })
 })
 
 app.listen(PORT, console.log(`Server listening on port ${PORT}`));

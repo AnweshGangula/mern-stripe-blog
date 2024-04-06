@@ -36,11 +36,12 @@ function CreatePost() {
     const isSuccess = postMutation.isSuccess;
 
     const error = postMutation.error;
+    const serverErrorMessage = error?.response?.data?.message;
     return (
         <div>
             {isLoading && <p>Loading...</p>}
             {isSuccess && <p>Post Created successfully</p>}
-            {isError && <p>{error.message}</p>}
+            {isError && <p>{serverErrorMessage}</p>}
             <form onSubmit={formik.handleSubmit}>
                 <input type="text" name="title" id="postTitle" placeholder='Enter Post Title'
                     {...formik.getFieldProps('title')}
