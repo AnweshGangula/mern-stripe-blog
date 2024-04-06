@@ -1,36 +1,23 @@
 import React, { useState } from "react";
-import { useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
 import {
-    FaThumbsUp,
-    FaThumbsDown,
-    FaEye,
-    FaEdit,
-    FaTrashAlt,
-    FaComment,
+  FaThumbsUp,
+  FaThumbsDown,
+  FaEye,
+  FaEdit,
+  FaTrashAlt,
+  FaComment,
 } from "react-icons/fa";
 import * as Yup from "yup";
 
-import { fetchPostById } from "../../APIServices/posts/postAPI";
-
 const PostDetails = () => {
   const [comment, setComment] = useState("");
-
-  const { postId } = useParams();
-
-  const { isError, isLoading, isSuccess, isStale, data, error } = useQuery({
-      queryKey: ['post-details'],
-      queryFn: () => fetchPostById(postId)
-  })
-
-  // console.log({ data })
 
   return (
     <div className="container mx-auto p-4">
       <div className="bg-white rounded-lg shadow-lg p-5">
         <img
           // src={postData?.image?.path}
-          src='https://cdn.pixabay.com/photo/2015/11/16/16/28/bird-1045954_1280.jpg'
+
           // alt={postData?._id}
           className="w-full h-full object-cover rounded-lg mb-4"
         />
@@ -87,7 +74,7 @@ const PostDetails = () => {
         <div className="flex justify-between items-center mb-3">
           <div
             className="rendered-html-content mb-2"
-            dangerouslySetInnerHTML={{ __html: data?.postFound?.description }}
+            // dangerouslySetInnerHTML={{ __html: postData?.description }}
           />
 
           {/* Edit delete icon */}
