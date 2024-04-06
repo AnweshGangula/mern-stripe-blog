@@ -10,10 +10,10 @@ const postsController = {
         // get the payload
         const postData = req.body;
     
-        const existingPost = await Post.findOne({ title: postData.title });
-        if (existingPost) {
-            throw new Error('Post with this title already exists');
-        };
+        // const existingPost = await Post.findOne({ title: postData.title });
+        // if (existingPost) {
+        //     throw new Error('Post with this title already exists');
+        // };
     
         const postCreated = await Post.create(postData);
         // console.log({postData})
