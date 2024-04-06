@@ -114,6 +114,10 @@ app.delete('/api/v1/posts/:postId', asyncHandler(async (req, res) => {
 
 }))
 
+// Not Found Handler
+app.use((req, res, next)=>{
+    res.status(404).json({message: 'Route not found'})
+})
 
 // Error Handling middleWare
 app.use((err, req, res, next) => {
