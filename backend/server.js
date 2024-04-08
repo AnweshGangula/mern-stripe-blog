@@ -4,6 +4,7 @@ dotenv.config();
 const cors = require('cors');
 
 const postsRouter = require('./router/post/postRouter');
+const usersRouter = require('./router/user/usersRouter');
 
 const connectDB = require('./utils/connectDB')
 
@@ -23,6 +24,7 @@ app.use(express.json()); // parse json data
 
 // Route Handlers
 app.use('/api/v1/posts', postsRouter);
+app.use('/api/v1/users', usersRouter);
 
 // Not Found Handler
 app.use((req, res, next)=>{
