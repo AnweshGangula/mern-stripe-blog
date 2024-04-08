@@ -92,9 +92,8 @@ const PostsList = () => {
                     <div className="absolute bottom-0 right-0 z-10"></div>
                     <img
                       className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-                      // src={post?.image?.path}
-                      src='https://cdn.pixabay.com/photo/2015/11/16/16/28/bird-1045954_1280.jpg'
-                      // alt={post?._id}
+                      src={post?.image?.path}
+                      // alt={post?.description}
                     />
                   </div>
                   <div className="pt-6 pb-3 px-4">

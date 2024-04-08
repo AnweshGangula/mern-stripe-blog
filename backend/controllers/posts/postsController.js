@@ -6,9 +6,10 @@ const Post = require('../../models/Post/Post');
 const postsController = {
 
     createPost: asyncHandler(async (req, res) => {
-        // console.log({body: req.body})
+        console.log({file: req.file})
         // get the payload
         const postData = req.body;
+        postData.image = req.file;
     
         // const existingPost = await Post.findOne({ title: postData.title });
         // if (existingPost) {
