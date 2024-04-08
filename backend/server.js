@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
+const passport = require("./utils/passport-config");
 
 const postsRouter = require('./router/post/postRouter');
 const usersRouter = require('./router/user/usersRouter');
@@ -17,6 +18,8 @@ const corsOptions = {
     credentials: true
 }
 app.use(cors(corsOptions))
+
+app.use(passport.initialize());
 
 
 // Middlewares
