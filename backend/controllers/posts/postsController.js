@@ -6,7 +6,7 @@ const Post = require('../../models/Post/Post');
 const postsController = {
 
     createPost: asyncHandler(async (req, res) => {
-        console.log({file: req.file})
+        // console.log({file: req.file})
         // get the payload
         const postData = req.body;
         postData.image = req.file;

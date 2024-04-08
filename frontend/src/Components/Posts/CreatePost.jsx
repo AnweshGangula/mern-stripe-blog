@@ -4,11 +4,16 @@ import * as Yup from 'yup'
 import ReactQuill from 'react-quill'
 import "react-quill/dist/quill.snow.css"
 import { useMutation } from '@tanstack/react-query'
+import { FaTimesCircle } from 'react-icons/fa'
+
 import { createPostAPI } from '../../APIServices/posts/postAPI'
 
 function CreatePost() {
     //state for wysiwyg
-    const [description, setDescription] = useState('')
+    const [description, setDescription] = useState('');
+    // File upload state
+    const [imageError, setImageError] = useState("");
+    const [imagePreview, setImagePreview] = useState(null);
     // post mutation
     const postMutation = useMutation({
         mutationKey: ['create-post'],
@@ -19,21 +24,57 @@ function CreatePost() {
         // initial data
         initialValues: {
             // title: '',
-            description: ''
+            description: '',
+            image: '',
         },
         // validation
         validationSchema: Yup.object({
             // title: Yup.string().required('Title is required'),
-            description: Yup.string().required('Description is required')
+            description: Yup.string().required('Description is required'),
+            image: Yup.string().required('Image is required'),
         }),
         // submit handler
         onSubmit: (postData) => {
             // console.log({ values });
-            postMutation.mutate(postData);
+            // postData.image = imagePreview;
+
+            const formData = new FormData();
+            formData.append('description', description);
+            formData.append('image', postData.image);
+
+            postMutation.mutate(formData);
         }
     })
 
     // console.log('mutation', postMutation)
+
+    //! File upload logic
+    //! Handle file change
+    const handleFileChange = (event)=>{
+      // console.log({event})
+      // get the file selected
+      const file = event.currentTarget.files[0];
+      // console.log({file})
+
+      // limit the file size
+      if(file.size > 1048576){
+        setImageError("file exceeds 1MB");
+        return;
+      }
+
+      if(!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)){
+        setImageError("file type not supported");
+        return;
+      }
+
+      formik.setFieldValue('image', file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+
+    const removeImage = ()=>{
+      formik.setFieldValue('image', null);
+      setImagePreview(null);
+    }
 
     const isLoading = postMutation.isPending;
     const isError = postMutation.isError;
@@ -105,7 +146,7 @@ function CreatePost() {
                   type="file"
                   name="image"
                   accept="image/*"
-                  // onChange={handleFileChange}
+                  onChange={handleFileChange}
                   className="hidden"
                 />
                 <label
@@ -116,16 +157,16 @@ function CreatePost() {
                 </label>
               </div>
               {/* Display error message */}
-              {/* {formik.touched.image && formik.errors.image && (
+              {formik.touched.image && formik.errors.image && (
                 <p className="text-sm text-red-600">{formik.errors.image}</p>
-              )} */}
+              )}
   
               {/* error message */}
-              {/* {imageError && <p className="text-sm text-red-600">{imageError}</p>} */}
+              {imageError && <p className="text-sm text-red-600">{imageError}</p>}
   
               {/* Preview image */}
   
-              {/* {imagePreview && (
+              {imagePreview && (
                 <div className="mt-2 relative">
                   <img
                     src={imagePreview}
@@ -139,7 +180,7 @@ function CreatePost() {
                     <FaTimesCircle className="text-red-500" />
                   </button>
                 </div>
-              )} */}
+              )}
             </div>
   
             {/* Submit Button - Button to submit the form */}

@@ -7,13 +7,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-console.log({CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME})
-
 const storage = new CloudinaryStorage({
     cloudinary,
     allowedFormats: ['jpg, png, jpeg'],
-    patams: {
-        folder: 'masynctexh-mern-blog',
+    params: {
+        folder: 'masynctech-mern-blog',
+        use_filename: true,
+        unique_filename: true,
         format: 'jpg', 
         transformation: [{ width: 500, height: 500, crop: 'limit' }],
     }
