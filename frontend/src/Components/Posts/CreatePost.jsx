@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query'
 import { FaTimesCircle } from 'react-icons/fa'
 
 import { createPostAPI } from '../../APIServices/posts/postAPI'
+import AlertMessage from '../Alert/AlertMessage'
 
 function CreatePost() {
     //state for wysiwyg
@@ -89,6 +90,14 @@ function CreatePost() {
             Add New Post
           </h2>
           {/* show alert */}
+
+          {isLoading &&(
+            <AlertMessage type="loading" message="Loading please wait..." />
+          )}
+
+          {isSuccess && (
+            <AlertMessage type="success" message="Post created successfully" />
+          )}
   
           <form onSubmit={formik.handleSubmit} className="space-y-6">
             {/* Description Input - Using ReactQuill for rich text editing */}
