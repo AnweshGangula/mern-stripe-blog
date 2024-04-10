@@ -11,8 +11,8 @@ const userController = {
         const { username, email, password } = req.body;
 
         // check if user exists
-        const userFound = await User.findOne({ username, email});
-        if(userFound){
+        const userFound = await User.findOne({ username, email });
+        if (userFound) {
             throw new Error('User already exists');
         }
         // hash password
@@ -34,20 +34,20 @@ const userController = {
 
     }),
     // ^Login
-    login: asyncHandler(async (req, res, next ) => {
-        passport.authenticate('local', (err, user, info)=>{
-            if(err) return next(err);
+    login: asyncHandler(async (req, res, next) => {
+        passport.authenticate('local', (err, user, info) => {
+            if (err) return next(err);
             // console.log({user});
             // console.log({info});
 
-            if(!user){
-                return res.status(401).json({message: info.message})
+            if (!user) {
+                return res.status(401).json({ message: info.message })
             }
 
-            const token = jwt.sign({id: user?._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
-            console.log({token});
+            const mern_access_token = jwt.sign({ id: user?._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+            console.log({ token: mern_access_token });
 
-            res.cookie('token', token, {httpOnly: true, secure: false, sameSite: 'strict', maxAge: 1000 * 60 * 60 * 24});
+            res.cookie('mern_access_token', mern_access_token, { httpOnly: true, secure: false, sameSite: 'strict', maxAge: 1000 * 60 * 60 * 24 });
             res.json({
                 status: 'success',
                 message: 'User logged in successfully',
@@ -60,7 +60,33 @@ const userController = {
 
         })(req, res, next);
     }),
-    // ^Logout
-    // ^Profile
+    googleAuth: passport.authenticate('google', {
+        scope: ['profile'],
+    }),
+    googleAuthCallback: asyncHandler(async (req, res, next) => {
+        passport.authenticate('google', {
+            failureRedirect: '/login',
+            session: false,
+            // scope: ['profile'],
+        }, (err, user, info) => {
+            if (err) return next(err);
+            if (!user) {
+                return res.redirect('http://localhost:5173/google-login-error');
+            }
+            // generate token
+            const mern_google_access_token = jwt.sign({ id: user?._id }, process.env.JWT_SECRET, { expiresIn: '3d' });
+            res.cookie(
+                'mern_access_token',
+                mern_google_access_token,
+                {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: 'strict',
+                    maxAge: 1000 * 60 * 60 * 24 * 3
+                }
+            );
+            res.redirect('http://localhost:5173/dashboard');
+        })(req, res, next)
+    }),
 }
 module.exports = userController;
