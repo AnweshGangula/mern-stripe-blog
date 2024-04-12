@@ -93,7 +93,7 @@ const userController = {
 
         // console.log("check authenticated", {token})
         if(!token){
-            return res.status(401).json({message: 'User not authenticated'})
+            return res.status(401).json({isAuthenticated: false})
         }
 
         try {
@@ -117,6 +117,11 @@ const userController = {
             // console.log({error})
             return res.status(401).json({isAuthenticated: false, error})
         }
+    }),
+    logout: asyncHandler(async (req, res, next) => {
+        res.cookie('mern_access_token', '', {maxAge: 1});
+        // res.clearCookie('mern_access_token');
+        res.status(200).json({message: 'User logged out successfully'});
     }),
 }
 module.exports = userController;
