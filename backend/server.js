@@ -1,9 +1,10 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
-const passport = require("./utils/passport-config");
 
+const passport = require("./utils/passport-config");
 const postsRouter = require('./router/post/postRouter');
 const usersRouter = require('./router/user/usersRouter');
 
@@ -20,6 +21,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 app.use(passport.initialize());
+app.use(cookieParser()); // automatically parses cookies
 
 
 // Middlewares

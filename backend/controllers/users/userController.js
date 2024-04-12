@@ -88,5 +88,35 @@ const userController = {
             res.redirect('http://localhost:5173/dashboard');
         })(req, res, next)
     }),
+    checkAuthenticated: asyncHandler(async (req, res, next) => {
+        const token = req.cookies["mern_access_token"];
+
+        console.log("check authenticated", {token})
+        if(!token){
+            return res.status(401).json({message: 'User not authenticated'})
+        }
+
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            // console.log({decoded});
+
+            const user = await User.findById(decoded.id);
+
+            if(!user){
+                return res.status(401).json({isAuthenticated: false})
+            } else{
+                return res.status(200).json({
+                    isAuthenticated: true,
+                    _id: user._id,
+                    username: user.username,
+                    profilePicture: user.profilePicture
+                })
+            }
+
+        } catch (error) {
+            // console.log({error})
+            return res.status(401).json({isAuthenticated: false, error})
+        }
+    }),
 }
 module.exports = userController;
