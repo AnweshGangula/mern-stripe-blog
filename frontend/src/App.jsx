@@ -16,24 +16,25 @@ import Register from './Components/User/Register'
 import Profile from './Components/User/Profile'
 import { checkAuthStatusAPI } from './APIServices/users/usersAPI'
 import { isAuthenticated } from './redux/slices/authSlices';
+import AuthRoute from './Components/AuthRoute/AuthRoute';
 
 function App() {
   const { isError, isLoading, isSuccess, data, error, refetch } = useQuery({
     queryKey: ['check-user-auth'],
     queryFn: checkAuthStatusAPI
   });
-  
+
   // console.log({data})
-  
+
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(isAuthenticated(data));
   }, [data]);
-  
+
   // Get logged in user from store
   const { userAuth } = useSelector((state) => state.auth);
-  
+
   return (
     <BrowserRouter>
       {userAuth ? <PrivateNavbar /> : <PublicNavbar />}
@@ -44,7 +45,11 @@ function App() {
         <Route element={<PostDetails />} path='/posts/:postId' />
         <Route element={<Login />} path='/login' />
         <Route element={<Register />} path='/register' />
-        <Route element={<Profile />} path='/profile' />
+        <Route element={
+          <AuthRoute>
+            <Profile />
+          </AuthRoute>}
+          path='/profile' />
         {/* <Route element={<UpdatePost />} path='/posts/:postId' /> */}
       </Routes>
     </BrowserRouter>
