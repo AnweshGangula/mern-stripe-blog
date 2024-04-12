@@ -40,15 +40,23 @@ function App() {
       {userAuth ? <PrivateNavbar /> : <PublicNavbar />}
       <Routes>
         <Route element={<Home />} path='/' />
-        <Route element={<CreatePost />} path='/create-post' />
-        <Route element={<PostsList />} path='/lists' />
+        <Route
+          element={
+            <AuthRoute>
+              <CreatePost />
+            </AuthRoute>
+          }
+          path='/create-post'
+        />
         <Route element={<PostDetails />} path='/posts/:postId' />
         <Route element={<Login />} path='/login' />
         <Route element={<Register />} path='/register' />
-        <Route element={
-          <AuthRoute>
-            <Profile />
-          </AuthRoute>}
+        <Route
+          element={
+            <AuthRoute>
+              <Profile />
+            </AuthRoute>
+          }
           path='/profile' />
         {/* <Route element={<UpdatePost />} path='/posts/:postId' /> */}
       </Routes>

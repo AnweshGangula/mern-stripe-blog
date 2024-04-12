@@ -10,6 +10,7 @@ const postsController = {
         // get the payload
         const postData = req.body;
         postData.image = req.file;
+        postData.author = req.user; // req.user is added by the isAuthenticated middleware
     
         // const existingPost = await Post.findOne({ title: postData.title });
         // if (existingPost) {
