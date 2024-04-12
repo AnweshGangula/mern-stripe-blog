@@ -42,3 +42,13 @@ export const loginAPI = async (userData) => {
     //     return error.response
     // }
 }
+
+export const checkAuthStatusAPI = async() => {
+    const response = await axios.get(
+        USERS_BASE_URL + '/checkAuthenticated',
+        {
+            withCredentials: true
+        }
+    )
+    return response.data
+}

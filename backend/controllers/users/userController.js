@@ -91,7 +91,7 @@ const userController = {
     checkAuthenticated: asyncHandler(async (req, res, next) => {
         const token = req.cookies["mern_access_token"];
 
-        console.log("check authenticated", {token})
+        // console.log("check authenticated", {token})
         if(!token){
             return res.status(401).json({message: 'User not authenticated'})
         }

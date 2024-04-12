@@ -35,7 +35,8 @@ const Login = () => {
         userMutation.mutateAsync(userRegistrationData).
         then((data)=>{
           // redirect to login page
-          // navigate('/login');
+          console.log("Logged in")
+          navigate('/profile');
         })
         .catch((error)=>{
             console.log({error})
