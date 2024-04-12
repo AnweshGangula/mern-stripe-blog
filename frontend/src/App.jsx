@@ -17,6 +17,7 @@ import Profile from './Components/User/Profile'
 import { checkAuthStatusAPI } from './APIServices/users/usersAPI'
 import { isAuthenticated } from './redux/slices/authSlices';
 import AuthRoute from './Components/AuthRoute/AuthRoute';
+import UserDashbaord from './Components/User/UserDashboard';
 
 function App() {
   const { isError, isLoading, isSuccess, data, error, refetch } = useQuery({
@@ -48,6 +49,17 @@ function App() {
           }
           path='/create-post'
         />
+        <Route element={<UserDashbaord />} path='/dashboard' >
+          <Route
+            element={
+              <AuthRoute>
+                <CreatePost />
+              </AuthRoute>
+            }
+            path='create-post' />
+          <Route element={<PostsList />} path='posts' />
+        </Route>
+
         <Route element={<PostDetails />} path='/posts/:postId' />
         <Route element={<Login />} path='/login' />
         <Route element={<Register />} path='/register' />
