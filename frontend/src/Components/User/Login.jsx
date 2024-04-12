@@ -20,8 +20,8 @@ const Login = () => {
     // initial data
     initialValues: {
         // title: '',
-        username: '',
-        password: '',
+        username: process.env.NODE_ENV !== 'production' ? "register" : "",
+        password: process.env.NODE_ENV !== 'production' ? "12345" : "",
     },
     // validation
     validationSchema: Yup.object({
