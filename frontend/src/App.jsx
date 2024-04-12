@@ -1,8 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import CreatePost from './Components/Posts/CreatePost'
 import PostsList from './Components/Posts//PostsList'
 import PublicNavbar from './Components/Navbar/PublicNavbar'
+import PrivateNavbar from './Components/Templates/PrivateNavbar'
 import Home from './Components/Home/Home'
 import PostDetails from './Components/Posts/PostDetails'
 import UpdatePost from './Components/Posts/UpdatePost'
@@ -11,10 +13,11 @@ import Register from './Components/User/Register'
 import Profile from './Components/User/Profile'
 
 function App() {
-
+  // Get logged in user from store
+  const { userAuth } = useSelector((state) => state.auth)
   return (
     <BrowserRouter>
-      <PublicNavbar />
+      {userAuth ? <PrivateNavbar /> : <PublicNavbar />}
       <Routes>
         <Route element={<Home />} path='/' />
         <Route element={<CreatePost />} path='/create-post' />
