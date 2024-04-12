@@ -11,7 +11,7 @@ const Profile = () => {
         queryFn: checkAuthStatusAPI
     });
 
-    console.log({data})
+    // console.log({data})
 
     const dispatch = useDispatch();
 

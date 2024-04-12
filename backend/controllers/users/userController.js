@@ -45,7 +45,7 @@ const userController = {
             }
 
             const mern_access_token = jwt.sign({ id: user?._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-            console.log({ token: mern_access_token });
+            // console.log({ token: mern_access_token });
 
             res.cookie('mern_access_token', mern_access_token, { httpOnly: true, secure: false, sameSite: 'strict', maxAge: 1000 * 60 * 60 * 24 });
             res.json({
