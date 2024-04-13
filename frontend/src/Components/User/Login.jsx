@@ -71,7 +71,7 @@ console.log('mutation', userMutation)
             )}
 
             {userMutation.isError && (
-              <AlertMessage type="error" message={userMutation.error.response.data.message} />
+              <AlertMessage type="error" message={userMutation?.error?.response?.data?.message ?? userMutation?.error?.message} />
             )}
 
             <label
