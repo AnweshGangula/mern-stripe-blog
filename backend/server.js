@@ -10,7 +10,6 @@ const usersRouter = require('./router/user/usersRouter');
 
 const connectDB = require('./utils/connectDB')
 
-connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -45,4 +44,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message, stack })
 })
 
-app.listen(PORT, console.log(`Server listening on port ${PORT}`));
+connectDB().then(()=>{
+    app.listen(PORT, console.log(`Server listening on port ${PORT}`));
+})
